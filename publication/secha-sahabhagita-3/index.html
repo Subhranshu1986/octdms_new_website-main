@@ -213,7 +213,18 @@
 </div>
 
 <script type="text/javascript">
+function getFlipSize () {
+  const W = $('#canvas').width();          // current available width
+  const H = Math.round(W / 3.5);           // 3.5 is your aspectRatio
+  return { w: W, h: H };
+}
+function resizeFlipbook () {
+  const size = getFlipSize();
+  $('.magazine').turn('size', size.w, size.h);
+  resizeViewport();                 // your own helper (already in script)
+}
 
+$(window).on('resize orientationchange', resizeFlipbook);
 function loadApp() {
 
  	$('#canvas').fadeIn(1000);
@@ -228,16 +239,17 @@ function loadApp() {
 	}
 	
 	// Create the flipbook
-
+	const size = getFlipSize();
 	flipbook.turn({
-			
+			 width:  size.w,
+  			height: size.h,
 			// Magazine width
 
-			width: 1400,
+			// width: 1400,
 
 			// Magazine height
 
-			height: 400,
+			// height: 400,
 
 			// Duration in millisecond
 
